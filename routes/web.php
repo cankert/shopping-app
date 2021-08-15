@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
+use App\Models\Item;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use Symfony\Component\HttpFoundation\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +24,25 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
+});
+
+Route::get('/items', function () {
+
+    $itemsNotDone=Item::where('done', 0)->cursor();
+    $itemsDone=Item::where('done', 1)->cursor();
+
+    return Inertia::render('Items', [
+        'itemsNotDone' => $itemsNotDone,
+        'itemsDone' => $itemsDone,
+    ]);
+});
+
+Route::patch('/items/{id}/update', function (Request $request, $id) {
+    $item = Item::find($id);
+    $item->update([
+        'done' => $request->done
+    ]);
+    return redirect('/items');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
