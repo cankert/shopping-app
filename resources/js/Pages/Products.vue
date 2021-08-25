@@ -1,15 +1,16 @@
 <template>
     <main-layout>
-        <div class="mt-3">
+        <div class="my-3">
             <div v-for="(group, index) in products" :key="index" class="mt-3">
                 <div v-if="group.length > 0">
                     <h2 class="rounded-t-lg p-3 bg-green-400">{{ index }}</h2>
                     <div class="p-2 shadow-xl">
-                        <div v-for="(product) in group" :key="product.id" class="flex gap-3">
+                        <div class="grid grid-cols-2 gap-3">
                             <div
-                                class="p-3 cursor-pointer bg-gray-300 transition-all duration-200 active:bg-green-800 active:text-white"
+                                v-for="(product) in group" :key="product.id"
+                                class="p-3 text-center cursor-pointer border border-gray-300 transition-all duration-200 active:bg-green-800 active:text-white"
                                 v-on:click="addProductToShoppingList(product.id)">
-                                <p>{{ product.name }}</p>
+                                {{ product.name }}
                             </div>
                         </div>
                     </div>

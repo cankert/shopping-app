@@ -1,13 +1,15 @@
 <template>
     <main-layout>
-        <div class="mt-3">
+        <div class="my-3">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div v-for="(group,index) in itemsNotDone" :key="index" class="mt-3 shadow-xl rounded-lg">
                     <h2 class="rounded-t-lg p-3 bg-green-400">{{index}}</h2>
                     <div v-for="(item) in group" :key="item.id">
                         <div class="p-3 flex gap-4">
-                            <div class="rounded p-2 w-1/4  bg-gray-800 text-white p-3 text-center">
-                                {{ item.quantity }}
+                            <div class="rounded w-1/4  bg-gray-800 text-white items-center text-center flex justify-center">
+                                <div v-on:click="minusOne(item.id)" class="w-1/3 p-2 bg-gray-700 active:bg-red-400">-</div>
+                                <div class="w-1/3 p-2">{{ item.quantity }}</div>
+                                <div v-on:click="plusOne(item.id)" class="w-1/3 p-2 bg-gray-700 active:bg-green-400">+</div>
                             </div>
                             <div class="p-3 w-1/4">
                                 {{ item.product.name }}
@@ -15,7 +17,7 @@
                             <div class="p-3 w-1/4">
                                 {{ item.product.category.name }}
                             </div>
-                            <div class="rounded p-3 text-center shadow-md" v-on:click="checkItem(item.id, item.done)">
+                            <div class="rounded p-3 text-right shadow-md" v-on:click="checkItem(item.id, item.done)">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                      fill="currentColor">
                                     <path fill-rule="evenodd"
@@ -28,18 +30,18 @@
                 </div>
                 <div v-if="itemsDone.length > 0" class="shadow-xl rounded-lg mt-5">
                     <h2 class="rounded-t-lg p-3 bg-gray-400 text-white">Done</h2>
-                    <div v-for="(item) in itemsDone" :key="item.id" class="p-3 grid gap-4 grid-rows-1 grid-flow-col">
-                        <div class="rounded p-2 bg-gray-400 text-white p-3 text-center">
+                    <div v-for="(item) in itemsDone" :key="item.id" class="p-3 flex gap-3">
+                        <div class="w-1/4 rounded p-3 bg-gray-400 text-white text-center">
                             {{ item.quantity }}
                         </div>
-                        <div class="p-3 text-center">
+                        <div class="w-1/4 p-3 text-center">
                             {{ item.product.name }}
                         </div>
-                        <div class="p-3 text-center">
-                            {{ item.product.type }}
+                        <div class="w-1/4 p-3 text-center">
+                            {{ item.product.category.name }}
                         </div>
-                        <div class="p-3 text-center bg-gray-400 text-white" v-on:click="checkItem(item.id, item.done)">
-                            <button class="">Done</button>
+                        <div class="w-1/4 p-3 text-center bg-gray-400 text-white" v-on:click="checkItem(item.id, item.done)">
+                            <button class="">Zurück</button>
                         </div>
                     </div>
                 </div>
@@ -59,11 +61,21 @@ export default {
         checkItem(id, done) {
             this.$inertia.patch(`/items/${id}/update`, {
                     'done': !parseInt(done)
+                },
+                {
+                    preserveScroll: true
                 }
             )
         },
-        addItem() {
-            this.$inertia.post(`/item/add`);
+        plusOne(id) {
+            this.$inertia.post(`/items/plus/${id}`, {}, {
+                preserveScroll: true
+            });
+        },
+        minusOne(id) {
+            this.$inertia.post(`/items/minus/${id}`,{}, {
+                preserveScroll: true
+            });
         },
         getDoneStatus(status) {
             return !!parseInt(status);

@@ -2,6 +2,7 @@
 
 use App\Models\Category;
 use App\Models\Item;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
@@ -20,15 +21,6 @@ use Symfony\Component\HttpFoundation\Request;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
-Route::get('/items', function () {
 
     $itemsNotDone=Item::with(['product'])->where('done', 0)->get();
     $itemsDone=Item::with('product')->where('done', 1)->get();
@@ -51,6 +43,10 @@ Route::get('/items', function () {
         'categories' => $categories,
     ]);
 })->name('items');
+
+Route::get('/demo', function () {
+    $products = Product::factory()->count(3)->create();
+});
 
 Route::get('/products', function () {
 
@@ -91,7 +87,25 @@ Route::post('/items/add/{id}', function ($id) {
             'done' => 0,
         ]);
     }
-    return redirect('products');
+    return Redirect::route('products');
+});
+
+Route::post('/items/plus/{id}', function ($id) {
+    $item = Item::find($id);
+    if($item) {
+        $item->quantity++;
+        $item->save();
+    }
+    return Redirect::route('items');
+});
+
+Route::post('/items/minus/{id}', function ($id) {
+    $item = Item::find($id);
+    if($item && $item->quantity > 1) {
+        $item->quantity--;
+        $item->save();
+    }
+    return Redirect::route('items');
 });
 
 Route::patch('/items/{id}/update', function (Request $request, $id) {
@@ -99,9 +113,5 @@ Route::patch('/items/{id}/update', function (Request $request, $id) {
     $item->update([
         'done' => $request->done
     ]);
-    return redirect('/items');
+    return Redirect::route('items');
 });
-
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
