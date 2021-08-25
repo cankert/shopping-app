@@ -2,10 +2,10 @@
     <main-layout>
         <div class="mt-3">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div v-for="category in categories" :key="category.id" class="mt-3 shadow-xl rounded-lg">
-                    <h2 class="rounded-t-lg p-3 bg-green-400">{{category.name}}</h2>
-                    <div v-for="(item) in itemsNotDone" :key="item.id">
-                        <div v-if="item.product.category.name === category.name" class="p-3 flex gap-4">
+                <div v-for="(group,index) in itemsNotDone" :key="index" class="mt-3 shadow-xl rounded-lg">
+                    <h2 class="rounded-t-lg p-3 bg-green-400">{{index}}</h2>
+                    <div v-for="(item) in group" :key="item.id">
+                        <div class="p-3 flex gap-4">
                             <div class="rounded p-2 w-1/4  bg-gray-800 text-white p-3 text-center">
                                 {{ item.quantity }}
                             </div>

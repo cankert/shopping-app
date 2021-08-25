@@ -32,11 +32,21 @@ Route::get('/items', function () {
 
     $itemsNotDone=Item::with(['product'])->where('done', 0)->get();
     $itemsDone=Item::with('product')->where('done', 1)->get();
+
+    $groupedProducts = [];
+    foreach($itemsNotDone as $item) {
+        $firstProduct = !array_key_exists($item->product->category->name, $groupedProducts);
+        if($firstProduct) {
+            $groupedProducts[$item->product->category->name]= [];
+        }
+        array_push($groupedProducts[$item->product->category->name], $item);
+    }
+
     $categories= Category::all();
     $categories->sortBy('order');
 
     return Inertia::render('Items', [
-        'itemsNotDone' => $itemsNotDone,
+        'itemsNotDone' => $groupedProducts,
         'itemsDone' => $itemsDone,
         'categories' => $categories,
     ]);
