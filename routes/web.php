@@ -62,7 +62,7 @@ Route::post('/product', function (Request $request) {
             'category_id' => $request->category_id,
         ]
     );
-    return 'yeah';
+    return Redirect::route('post_product');
 })->name('post_product');
 
 Route::get('/init', function () {
