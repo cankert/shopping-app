@@ -11,11 +11,8 @@
                                 <div class="w-1/3 p-2">{{ item.quantity }}</div>
                                 <div v-on:click="plusOne(item.id)" class="w-1/3 p-2 bg-gray-700 active:bg-green-400">+</div>
                             </div>
-                            <div class="p-3 w-1/4">
+                            <div class="p-3 w-2/4">
                                 {{ item.product.name }}
-                            </div>
-                            <div class="p-3 w-1/4">
-                                {{ item.product.category.name }}
                             </div>
                             <div class="rounded p-3 text-right shadow-md" v-on:click="checkItem(item.id, item.done)">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
@@ -34,11 +31,8 @@
                         <div class="w-1/4 rounded p-3 bg-gray-400 text-white text-center">
                             {{ item.quantity }}
                         </div>
-                        <div class="w-1/4 p-3 text-center">
+                        <div class="w-2/4 p-3 text-center">
                             {{ item.product.name }}
-                        </div>
-                        <div class="w-1/4 p-3 text-center">
-                            {{ item.product.category.name }}
                         </div>
                         <div class="w-1/4 p-3 text-center bg-gray-400 text-white" v-on:click="checkItem(item.id, item.done)">
                             <button class="">Zurück</button>
