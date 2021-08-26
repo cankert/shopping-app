@@ -1,5 +1,6 @@
 <?php
 
+use App\Imports\CategoryImport;
 use App\Models\Category;
 use App\Models\Item;
 use Illuminate\Support\Facades\Redirect;
@@ -7,6 +8,7 @@ use Inertia\Inertia;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Request;
 
 /*
@@ -45,7 +47,9 @@ Route::get('/', function () {
 })->name('items');
 
 Route::get('/demo', function () {
-    $products = Product::factory()->count(3)->create();
+    Excel::import(new CategoryImport, 'categories.xlsx');
+    //$categories = Category::factory()->count(3)->create();
+    //$products = Product::factory()->count(3)->create();
 });
 
 Route::get('/products', function () {
