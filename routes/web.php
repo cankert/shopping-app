@@ -1,15 +1,16 @@
 <?php
 
 use App\Imports\CategoryImport;
+use App\Imports\ProductImport;
 use App\Models\Category;
 use App\Models\Item;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use Maatwebsite\Excel\Facades\Excel;
-use Symfony\Component\HttpFoundation\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,8 +47,27 @@ Route::get('/', function () {
     ]);
 })->name('items');
 
-Route::get('/demo', function () {
+Route::get('/product', function () {
+    $categories= Category::all();
+    $categories->sortBy('order');
+    return Inertia::render('Product', [
+        'categories' => $categories,
+    ]);
+})->name('product');
+
+Route::post('/product', function (Request $request) {
+    Product::create(
+        [
+            'name' => $request->name,
+            'category_id' => $request->category_id,
+        ]
+    );
+    return 'yeah';
+})->name('post_product');
+
+Route::get('/init', function () {
     Excel::import(new CategoryImport, 'categories.xlsx');
+    Excel::import(new ProductImport, 'products.xlsx');
     //$categories = Category::factory()->count(3)->create();
     //$products = Product::factory()->count(3)->create();
 });
