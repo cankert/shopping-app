@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import {BeakerIcon} from '@heroicons/vue/solid'
+import { BeakerIcon } from '@heroicons/vue/solid'
 import { Link } from '@inertiajs/inertia-vue3'
 import MainLayout from '@/Layouts/MainLayout.vue'
 
@@ -34,7 +34,9 @@ export default {
     components: {MainLayout, BeakerIcon, Link},
     methods: {
         addProductToShoppingList(id) {
-            this.$inertia.post(`/items/add/${id}`);
+            this.$inertia.post(`/items/add/${id}`, {}, {
+                preserveScroll: true
+            });
 
         }
     }

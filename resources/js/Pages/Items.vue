@@ -6,15 +6,17 @@
                     <h2 class="rounded-t-lg p-3 bg-green-400">{{index}}</h2>
                     <div v-for="(item) in group" :key="item.id">
                         <div class="p-3 flex gap-4">
-                            <div class="rounded w-1/4  bg-gray-800 text-white items-center text-center flex justify-center">
-                                <div v-on:click="minusOne(item.id)" class="w-1/3 p-2 bg-gray-700 active:bg-red-400">-</div>
-                                <div class="w-1/3 p-2">{{ item.quantity }}</div>
-                                <div v-on:click="plusOne(item.id)" class="w-1/3 p-2 bg-gray-700 active:bg-green-400">+</div>
+                            <div class="w-1/4  bg-gray-800 text-white text-center flex">
+                                <div v-on:click="minusOne(item.id)" class="w-1/3 py-3 bg-gray-700 active:bg-red-400">
+                                    <p>-</p>
+                                </div>
+                                <div class="w-1/3 py-3">{{ item.quantity }}</div>
+                                <div v-on:click="plusOne(item.id)" class="h-full w-1/3 py-3 bg-gray-700 active:bg-green-400">+</div>
                             </div>
-                            <div class="p-3 w-2/4">
+                            <div class="py-3 w-2/4">
                                 {{ item.product.name }}
                             </div>
-                            <div class="rounded p-3 text-right shadow-md" v-on:click="checkItem(item.id, item.done)">
+                            <div class="w-1/5 rounded py-3 justify-center flex shadow-md active:bg-green-600 active:text-white active:scale-110 transition-all duration-150" v-on:click="checkItem(item.id, item.done)">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                      fill="currentColor">
                                     <path fill-rule="evenodd"
@@ -26,8 +28,8 @@
                     </div>
                 </div>
                 <div v-if="itemsDone.length > 0" class="shadow-xl rounded-lg mt-5">
-                    <h2 class="rounded-t-lg p-3 bg-gray-400 text-white">Done</h2>
-                    <div v-for="(item) in itemsDone" :key="item.id" class="p-3 flex gap-3">
+                    <h2 class="p-3 bg-gray-400 text-white" v-on:click="toggleDone = !toggleDone">Done ({{itemsDone.length}})</h2>
+                    <div v-if="toggleDone" v-for="(item) in itemsDone" :key="item.id" class="p-3 flex gap-3">
                         <div class="w-1/4 rounded p-3 bg-gray-400 text-white text-center">
                             {{ item.quantity }}
                         </div>
@@ -50,6 +52,11 @@ import MainLayout from '@/Layouts/MainLayout.vue'
 export default {
     props: ['itemsNotDone', 'itemsDone', 'categories'],
     components: {MainLayout},
+    data: function () {
+        return {
+            'toggleDone':false
+        }
+    },
     computed: {},
     methods: {
         checkItem(id, done) {

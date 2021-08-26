@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Application;
 use Maatwebsite\Excel\Facades\Excel;
 
 /*
@@ -65,7 +64,7 @@ Route::post('/product', function (Request $request) {
     return Redirect::route('post_product');
 })->name('post_product');
 
-Route::get('/init', function () {
+Route::get('/demo', function () {
     Excel::import(new CategoryImport, 'categories.xlsx');
     Excel::import(new ProductImport, 'products.xlsx');
     //$categories = Category::factory()->count(3)->create();
