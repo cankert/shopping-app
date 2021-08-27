@@ -7,17 +7,19 @@
                         <h2 class="rounded-t-lg p-3 bg-green-400">{{ categoryName }}</h2>
                         <div v-for="(item) in group" :key="item.id">
                             <div class="p-3 flex gap-4">
-                                <div class="w-1/4  bg-gray-800 text-white text-center flex">
-                                    <div v-on:click="minusOne(item.id)" class="w-1/3 py-3 bg-gray-700 active:bg-red-400">
-                                        <p>-</p>
+                                <div class="w-1/4  bg-gray-800 text-white">
+                                    <div v-on:click="minusOne(item.id)" class="justify-center items-center h-full inline-flex w-1/3 bg-gray-700 active:bg-red-400">
+                                        -
                                     </div>
-                                    <div class="w-1/3 py-3">{{ item.quantity }}</div>
-                                    <div v-on:click="plusOne(item.id)" class="h-full w-1/3 py-3 bg-gray-700 active:bg-green-400">+</div>
+                                    <div class="w-1/3 justify-center inline-flex items-center h-full px-2 ">{{ item.quantity }}</div>
+                                    <div v-on:click="plusOne(item.id)" class="justify-center items-center h-full inline-flex w-1/3 bg-gray-700 active:bg-green-400">
+                                        +
+                                    </div>
                                 </div>
                                 <div class="py-3 w-2/4">
                                     {{ item.product.name }}
                                 </div>
-                                <div class="w-1/5 rounded py-3 justify-center flex shadow-md active:bg-green-600 active:text-white active:scale-110 transition-all duration-150" v-on:click="checkItem(item.id, item.done)">
+                                <div class="w-1/5 rounded py-3 justify-center items-center  inline-flex shadow-md active:bg-green-600 active:text-white active:scale-110 transition-all duration-150" v-on:click="checkItem(item.id, item.done)">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                          fill="currentColor">
                                         <path fill-rule="evenodd"
