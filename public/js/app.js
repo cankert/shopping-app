@@ -31860,9 +31860,7 @@ var _hoisted_18 = {
 };
 var _hoisted_19 = ["onClick"];
 
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  "class": ""
-}, "Zurück", -1
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", null, "Zurück", -1
 /* HOISTED */
 );
 

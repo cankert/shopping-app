@@ -39,7 +39,7 @@
                             {{ item.product.name }}
                         </div>
                         <div class="w-1/5 p-3 text-center bg-gray-400 text-white" v-on:click="checkItem(item.id, item.done)">
-                            <button class="">Zurück</button>
+                            <button>Zurück</button>
                         </div>
                     </div>
                 </div>

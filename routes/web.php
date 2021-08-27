@@ -26,7 +26,7 @@ Route::get('/', function () {
 
     $itemsNotDone=Item::with(['product'])->where('done', 0)->get();
     $itemsDone=Item::with('product')->where('done', 1)->get();
-
+    $itemsDone->sortBy('name');
 
     $categories= Category::all();
     $categories->sortByDesc('order');
