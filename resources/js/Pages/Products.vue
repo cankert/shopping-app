@@ -10,7 +10,7 @@
                     <div class="p-2 shadow-xl">
                         <div class="grid grid-cols-2 gap-3">
                             <div
-                                v-for="(product) in group" :key="product.id"
+                                v-for="(product) in group.sort((a, b) => (a.name > b.name) ? 1 : -1)" :key="product.id"
                                 class="p-3 text-center cursor-pointer border border-gray-300 transition-all duration-200 active:bg-green-800 active:text-white"
                                 v-on:click="addProductToShoppingList(product.id)">
                                 {{ product.name }}
