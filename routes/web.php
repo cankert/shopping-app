@@ -1,5 +1,7 @@
 <?php
 
+use App\Exports\CategoryExport;
+use App\Exports\ProductExport;
 use App\Imports\CategoryImport;
 use App\Imports\ProductImport;
 use App\Models\Category;
@@ -79,6 +81,13 @@ Route::get('/products', function () {
         'products' => $products,
     ]);
 })->name('products');
+
+Route::get('/products/download', function (){
+    return Excel::download(new ProductExport, 'products.xlsx');
+});
+Route::get('/category/download', function (){
+    return Excel::download(new CategoryExport, 'categories.xlsx');
+});
 
 Route::post('/items/add/{id}', function ($id) {
     //check if product is already on list
