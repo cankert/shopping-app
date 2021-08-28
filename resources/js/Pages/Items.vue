@@ -4,7 +4,7 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div v-for="(group,categoryName) in itemsNotDone" :key="categoryName" class="mt-3 shadow-xl rounded-lg">
                     <div v-if="group.length > 0">
-                        <h2 class="rounded-t-lg p-3 bg-green-400">{{ categoryName }}</h2>
+                        <h2 class="rounded-t-lg p-3 bg-gray-800 text-white">{{ categoryName }}</h2>
                         <div v-for="(item) in group" :key="item.id">
                             <div class="p-3 flex gap-4">
                                 <div class="w-1/4  bg-gray-800 text-white">
