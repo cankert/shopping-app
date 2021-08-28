@@ -26,18 +26,19 @@ Route::get('/', function () {
 
     $itemsNotDone=Item::with(['product'])->where('done', 0)->get();
     $itemsDone=Item::with('product')->where('done', 1)->get();
-
-    $groupedProducts = [];
-    foreach($itemsNotDone as $item) {
-        $firstProduct = !array_key_exists($item->product->category->name, $groupedProducts);
-        if($firstProduct) {
-            $groupedProducts[$item->product->category->name]= [];
-        }
-        array_push($groupedProducts[$item->product->category->name], $item);
-    }
+    $itemsDone->sortBy('name');
 
     $categories= Category::all();
-    $categories->sortBy('order');
+    $categories->sortByDesc('order');
+
+    $groupedProducts = [];
+    foreach ($categories as $category) {
+        $groupedProducts[$category->name] = [];
+    }
+
+    foreach($itemsNotDone as $item) {
+        array_push($groupedProducts[$item->product->category->name], $item);
+    }
 
     return Inertia::render('Items', [
         'itemsNotDone' => $groupedProducts,
@@ -74,17 +75,6 @@ Route::get('/demo', function () {
 Route::get('/products', function () {
 
     $products=Product::with('category')->get();
-    $products->sortBy('name');
-//    $groupedProducts = [];
-//    foreach($products as $product) {
-//        $firstProduct = !array_key_exists($product->category->name, $groupedProducts);
-//        if($firstProduct) {
-//            $groupedProducts[$product->category->name]= [];
-//        }
-//        array_push($groupedProducts[$product->category->name], $product);
-//    }
-    //$categories= Category::all();
-    //$categories->sortBy('order');
     return Inertia::render('Products', [
         'products' => $products,
     ]);
