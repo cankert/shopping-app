@@ -57,7 +57,6 @@ export default {
             'toggleDone':false
         }
     },
-    computed: {},
     methods: {
         checkItem(id, done) {
             this.$inertia.patch(`/items/${id}/update`, {

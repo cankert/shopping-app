@@ -74,20 +74,19 @@ Route::get('/demo', function () {
 Route::get('/products', function () {
 
     $products=Product::with('category')->get();
-
-    $groupedProducts = [];
-    foreach($products as $product) {
-        $firstProduct = !array_key_exists($product->category->name, $groupedProducts);
-        if($firstProduct) {
-            $groupedProducts[$product->category->name]= [];
-        }
-        array_push($groupedProducts[$product->category->name], $product);
-    }
-    $categories= Category::all();
-    $categories->sortBy('order');
+    $products->sortBy('name');
+//    $groupedProducts = [];
+//    foreach($products as $product) {
+//        $firstProduct = !array_key_exists($product->category->name, $groupedProducts);
+//        if($firstProduct) {
+//            $groupedProducts[$product->category->name]= [];
+//        }
+//        array_push($groupedProducts[$product->category->name], $product);
+//    }
+    //$categories= Category::all();
+    //$categories->sortBy('order');
     return Inertia::render('Products', [
-        'products' => $groupedProducts,
-        'categories' => $categories,
+        'products' => $products,
     ]);
 })->name('products');
 
